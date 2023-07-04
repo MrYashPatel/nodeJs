@@ -1,26 +1,22 @@
 const http = require('http');
+
 const express = require('express');
 
 const app = express();
 
-const server = http.createServer((req,res) => {
-    console.log(req.url,req.headers, req.method);
-    const url= req.url;
-    res.setHeader('Content-Type', 'text/html');
-    if (req.url === '/') {
-        res.write('<html>');
-        res.write('<head><title>Horn</title></head>');
-        res.write('<body>Beep Beep</body>');
-        res.write('</html>');
-        res.end();
-    }
-    //process.exit();
-    res.write('<html>');
-    res.write('<head><title>Pom</title></head>');
-    res.write('<body>Pom Pom</body>');
-    res.write('</html>');
-    res.end();
+app.use('add-product/',(req,res,next)=> {
+    console.log(`In the another middleware`);
+    res.send("The Product Page");
+    next();
 });
 
+app.use('/',(req,res,next)=> {
+    console.log(`In the another middleware`);
+    res.send("Hello from Express");
+});
+
+
+
+const server = http.createServer(app);
 
 server.listen(3000);
