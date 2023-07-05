@@ -1,7 +1,7 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 
 
 const app = express();
@@ -9,7 +9,8 @@ const app = express();
 const adminRouter = require('./routes/admin');
 const shopRouter = require('./routes/shop');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/admin',adminRouter);
 app.use(shopRouter);
